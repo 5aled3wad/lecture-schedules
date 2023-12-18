@@ -1,1 +1,1 @@
-"# lecture-schedules" 
+"# lecture-schedules"
