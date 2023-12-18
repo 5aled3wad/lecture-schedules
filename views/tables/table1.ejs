@@ -1,0 +1,47 @@
+<%- include('../partials/header') -%> <%- include('../partials/navbar') -%>
+<table
+  class="table caption-top"
+  style="margin-top: 66px; margin-left: 20px; width: 97%"
+>
+  <caption><h3>First Group</h3></caption>
+  <thead>
+    <tr>
+      <th scope="col"> </th>
+      <th scope="col">Lecture name</th>
+      <th scope="col">Instractor</th>
+      <th scope="col">Location</th>
+      <th scope="col">Time</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for(let i =0; i<6 ;i++){%>
+    <th scope="row"><%= week[i]; %></th>
+    <tr>
+      <%= %>
+    </tr>
+    <%group_num.forEach((event) => {%> <%if(event.day===week[i]){%>
+    <% for(let g=0;g<12;g++){%> <%if(event.timeH===houres[g]){%>
+    <tr>
+      <td><%= %></td>
+      <td><%= event.lectureName %></td>
+      <td><%= event.instractor %></td>
+      <td><%= event.location %></td>
+      <td><%= event.timeH %> : <%= event.timeM %></td>
+      <td>
+        <div class="butn">
+          <a href="<%='/events/edit/'+event.id %>" class="btn btn-primary"
+            >Edit</a
+          >
+          <a href="<%='/events/delete/'+event.id %>" class="btn btn-danger"
+            >Delete</a
+          >
+        </div>
+      </td>
+    </tr>
+
+    <%}}}})}%>
+  </tbody>
+</table>
+<%- include('../partials/footer') -%>
