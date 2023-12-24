@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Userdata = require("../model/mongo");
 const bcrypt = require("bcrypt-nodejs");
-
+const { validationResult } = require("express-validator");
 const passport = require("passport");
 const salt = bcrypt.genSaltSync(10);
-
+const userValidator = require('../validator/user')
 // router to login page
 router.get("/login", (req, res) => {
   res.render("users/login");
@@ -48,10 +48,22 @@ router.get("/alert_user", (req, res) => {
 });
 
 // post to sign page
-router.post("/signup", async (req, res) => {
+router.post("/signup",userValidator.signup, async (req, res) => {
+  const {email} = req.body;
+
+  const errors = validationResult(req);
+  console.log(errors);
+  if (!errors.isEmpty()){
+    return res.render('users/sign',{
+      email: email,
+      errorMessage:errors.array()[0].msg,
+      validationErrors: errors.array(),
+    })
+  }
+
   try {
     const finduser = await Userdata.Userdata.findOne({
-      email: req.body.email,
+      email: email,
     });
     if (finduser) {
       res.redirect("/users/alert_user");

@@ -1,35 +1,40 @@
 <%- include('../partials/header') -%> <%- include('../partials/navbar') -%>
-<style>
-  .container {
-    margin-top: 55px;
-  }
-</style>
-<div class="container">
-  <div class="row mt-4">
-    <div class="col-md-6 offset-md-3">
-      <h1 class="display-4">Sign Up</h1>
-      <hr />
-      <form action="/users/signup" method="post">
-        <div class="form-group"style="margin-top: 2%;">
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" class="form-control" />
-        </div>
+    <style>
+      .container {
+        margin-top: 55px;
+      }
+    </style>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+          <h1 class="display-4">Sign Up</h1>
+          <hr />
+          <% if (errorMessage) { %>
+            <div class="user-message user-message--error">
+              <%= errorMessage %>
+            </div>
+            <% } %>
+              <form action="/users/signup" method="post">
+                <div class="form-group" style="margin-top: 2%;">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" id="email" class="form-control" />
+                </div>
 
-        <div class="form-group" style="margin-top: 2%;">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" class="form-control"/>
-        </div>
+                <div class="form-group" style="margin-top: 2%;">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" id="password" class="form-control" />
+                </div>
 
-        <div class="form-group"style="margin-top: 2%;">
-          <label for="confirmpassword">Confirm Password</label>
-          <input type="password" name="confirmpassword" id="confirmpassword" class="form-control"/>
-        </div>
+                <div class="form-group" style="margin-top: 2%;">
+                  <label for="confirmpassword">Confirm Password</label>
+                  <input type="password" name="confirmpassword" id="confirmpassword" class="form-control" />
+                </div>
 
-        <div class="form-group"style="margin-top: 2%;">
-          <button type="submit" class="btn btn-primary">Sign_Up</button>
+                <div class="form-group" style="margin-top: 2%;">
+                  <button type="submit" class="btn btn-primary">Sign_Up</button>
+                </div>
+              </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
-<%- include('../partials/footer') -%>
+    <%- include('../partials/footer') -%>
