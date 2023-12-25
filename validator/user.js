@@ -22,7 +22,7 @@ module.exports.signup = [
 module.exports.login = [
   check("email", "Envalid  email.")
     .isEmail()
-    .custom((value, { req }) => {
+    .custom((value) => {
       return Userdata.Userdata.findOne({ email: value ,isConfirmed: true }).then((user) => {
         if (!user) {
           return Promise.reject("this email dosen't exists");
@@ -30,6 +30,6 @@ module.exports.login = [
       });
     })
     .trim(),
-  check("password", "password must be at least 5 characters")
+  check("password", "password must be at least 1 characters")
     .isLength({ min: 1 }),
 ];

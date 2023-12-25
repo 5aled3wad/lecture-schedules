@@ -7,8 +7,10 @@ const passport = require("passport");
 const salt = bcrypt.genSaltSync(10);
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const userValidator = require("../validator/user");
 const crypto = require("crypto");
+
+const userValidator = require("../validator/user");
+
 const API_KEY =
   "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";
 const SINGLE_SENDER = '"table" sara.momo7112@gmail.com';
@@ -23,32 +25,52 @@ const transporter = nodemailer.createTransport(
 
 // router to login page
 router.get("/login", (req, res) => {
-  res.render("users/login");
+  res.render("users/login", {
+    errorMessage: null,
+    validationErrors: [],
+  });
 });
 
 // post to login page
-router.post("/login", async (req, res) => {
+router.post("/login", userValidator.login, async (req, res) => {
+  const email = req.body.email;
+  const errors = validationResult(req);
+  console.log("validateErrors:", errors);
+  if (!errors.isEmpty()) {
+    return res.render("users/login", {
+      email: email,
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+    });
+  }
+
   try {
     const check_user = await Userdata.Userdata.findOne({
       email: req.body.email,
     });
 
     if (!check_user) {
-      res.redirect("/users/alert_user");
+      return res.redirect("/users/alert_user");
     } else {
       const matchpass = bcrypt.compareSync(
         req.body.password,
         check_user.password
       );
       if (matchpass) {
-        res.redirect("/users/profil");
-        console.log("Login successfully");
+        //session
+        req.session.isLoggedIn = true;
+        req.session.user = check_user;
+        req.session.save((err) => {
+          console.log(err);
+          console.log("1------------------------------");
+          return res.redirect("/events");
+        });
       } else {
-        res.redirect("/users/alert_user");
+        return res.redirect("/users/alert_user");
       }
     }
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 });
 
@@ -114,8 +136,9 @@ router.post("/signup", userValidator.signup, async (req, res) => {
             html: `<h1>hi from us. </h1>
           <p> To confirm you email <a href='http://localhost:3000/users/confirm/${token}'> Click here </a> 
         `,
-          }).then((params) => {
-             res.redirect("/users/login");
+          })
+          .then((params) => {
+            res.redirect("/users/login");
           })
           .catch((err) => console.log("asdfa", err));
         // console.log("user data is add in database");
@@ -147,10 +170,13 @@ router.get("/profil", (req, res) => {
   res.render("users/profil");
 });
 
-// // get to logout page
-// router.get("/logout", (req, res) => {
-//   req.logout();
-//   res.redirect("/users/login");
-// });
+// get to logout page
+router.post("/logout", (req, res) => {
+  console.log('logout');
+  req.session.destroy((err) => {
+    console.log(err);
+    res.redirect("/events");
+  });
+});
 
 module.exports = router;

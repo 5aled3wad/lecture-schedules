@@ -8,6 +8,11 @@
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <h1 class="display-4">Login </h1>
+      <% if (errorMessage) { %>
+        <div class="user-message user-message--error">
+          <%= errorMessage %>
+        </div>
+        <% } %>
       <hr>
       <form action="/users/login" method="post">
         <div class="form-group"style="margin-top: 2%;">

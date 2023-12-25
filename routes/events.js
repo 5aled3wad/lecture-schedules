@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Mydata = require("../model/mongo");
-
+const isAuth = require("../auth/isAuth");
 // route to index page
 router.get("/", (req, res) => {
+  console.log("user:",req.user);
   res.render("events/home");
 });
 
 // route to create page
-router.get("/create", (req, res) => {
+router.get("/create", isAuth, (req, res) => {
   res.render("events/create", {});
 });
 
@@ -18,7 +19,7 @@ router.get("/alert", (req, res) => {
 });
 
 // Create event
-router.post("/create", async (req, res) => {
+router.post("/create", isAuth, async (req, res) => {
   const check1 = await Mydata.Mydata.findOne({
     timeH: req.body.timeH,
     day: req.body.day,
