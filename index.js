@@ -4,17 +4,6 @@ const path = require("path");
 const Mydata = require("./model/mongo");
 const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
-// const session = require("express-session");
-// const mongodbsession = require('connect-mongodb-session')(session);
-
-// session
-// app.use(
-//   session({
-//     secret: "key will sign cookie",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
 
 // ejs connection
 app.set("view engine", "ejs");
@@ -28,6 +17,34 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(express.static("node_modules"));
 
+//session
+app.use(
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
+//user
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  Userdata.Userdata.findById(req.session.user._id)
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
+});
+
+//local views variabls passed to every view.
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  next();
+});
 // routes connection
 const event = require("./routes/events");
 app.use("/events", event);
@@ -38,6 +55,14 @@ app.use("/users", users);
 const tables = require("./routes/tables");
 app.use("/tables", tables);
 
-app.listen(3000, () => {
-  console.log("port connected");
-});
+mongoose
+  .connect(MONGODB_URL)
+  .then(() => {
+    console.log("mongodb connected");
+    app.listen(3000, () => {
+      console.log("port connected");
+    });
+  })
+  .catch(() => {
+    console.log("Failed connect");
+  });

@@ -1,13 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose
-  .connect("mongodb://localhost:27017/lectureTable")
-  .then(() => {
-    console.log("mongodb connected");
-  })
-  .catch(() => {
-    console.log("Failed connect");
-  });
+
 
 // table schema
 const eventSchema = mongoose.Schema({
@@ -53,6 +46,9 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  confirmToken: String,
+  confirmTokenExpiration: Date,
+  isConfirmed: Boolean,
 });
 
 // user model
