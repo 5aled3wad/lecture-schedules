@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Mydata = require("../model/mongo");
+// const session = require("express-session");
 
 // route to index page
 router.get("/", (req, res) => {
   res.render("events/home");
+  // console.log(req.session);
 });
 
 // route to create page

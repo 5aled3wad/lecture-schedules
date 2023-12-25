@@ -4,6 +4,17 @@ const path = require("path");
 const Mydata = require("./model/mongo");
 const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
+// const session = require("express-session");
+// const mongodbsession = require('connect-mongodb-session')(session);
+
+// session
+// app.use(
+//   session({
+//     secret: "key will sign cookie",
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 // ejs connection
 app.set("view engine", "ejs");
