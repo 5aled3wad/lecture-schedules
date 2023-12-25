@@ -1,0 +1,40 @@
+@import "../../styles/variables.scss";
+
+
+.navbar {
+  padding: 10px 0;
+  background-color: white;
+  box-shadow: 0px 1px 1px #00000036;
+
+  .container-st {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+
+    .logo,
+    .user .image {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .user {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+
+      .text {
+        color: $main-color;
+        font-weight: 700;
+      }
+    }
+  }
+}
