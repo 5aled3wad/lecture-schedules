@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Mydata = require("../model/mongo");
+const isAuth = require("../auth/isAuth");
 
 // route to index page
 router.get("/", (req, res) => {

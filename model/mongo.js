@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-
-
 // table schema
 const eventSchema = mongoose.Schema({
   lectureName: {

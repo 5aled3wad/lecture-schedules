@@ -138,7 +138,7 @@ router.post("/signup", userValidator.signup, async (req, res) => {
         `,
           })
           .then((params) => {
-            res.redirect("/users/login");
+            return res.redirect("/users/login");
           })
           .catch((err) => console.log("asdfa", err));
         // console.log("user data is add in database");
@@ -172,7 +172,7 @@ router.get("/profil", (req, res) => {
 
 // get to logout page
 router.post("/logout", (req, res) => {
-  console.log('logout');
+  console.log("logout");
   req.session.destroy((err) => {
     console.log(err);
     res.redirect("/events");

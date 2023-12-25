@@ -4,6 +4,13 @@ const path = require("path");
 const Mydata = require("./model/mongo");
 const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const mongoose = require("mongoose");
+const Userdata = require("./model/mongo");
+const MONGODB_URL = "mongodb://localhost:27017/lectureTable";
+
+const store = new MongoDBStore({ uri: MONGODB_URL, collection: "session" });
 
 // ejs connection
 app.set("view engine", "ejs");
