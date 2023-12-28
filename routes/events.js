@@ -72,7 +72,7 @@ router.post("/create", isAuth, async (req, res) => {
 // });
 
 // route to edit page
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", isAuth, async (req, res) => {
   const event = await Mydata.Mydata.findOne({ _id: req.params.id });
   if (event) {
     res.render("events/edit", {
@@ -82,27 +82,41 @@ router.get("/edit/:id", async (req, res) => {
 });
 
 // Update event
-router.post("/update/:id", async (req, res) => {
-  const event_id = { _id: req.params.id };
-  const newevent = {
-    $set: {
-      lectureName: req.body.lectureName,
-      instractor: req.body.instractor,
-      location: req.body.location,
-      group: req.body.group,
-      day: req.body.day,
+router.post("/update/:id", isAuth, async (req, res) => {
+  try {
+    const check1 = await Mydata.Mydata.findOne({
       timeH: req.body.timeH,
-      timeM: req.body.timeM,
-    },
-  };
-  await Mydata.Mydata.updateOne(event_id, newevent)
-    .then(() => {
-      console.log("event updated");
-      res.redirect("/events");
-    })
-    .catch((e) => {
-      console.log(e);
+      day: req.body.day,
+      group: req.body.group,
     });
+    const check2 = await Mydata.Mydata.findOne({
+      timeH: req.body.timeH,
+      day: req.body.day,
+      location: req.body.location,
+    });
+    if (check2 || check1) {
+      res.redirect("/events/alert");
+    } else {
+      const event_id = { _id: req.params.id };
+      const newevent = {
+        $set: {
+          lectureName: req.body.lectureName,
+          instractor: req.body.instractor,
+          location: req.body.location,
+          group: req.body.group,
+          day: req.body.day,
+          timeH: req.body.timeH,
+          timeM: req.body.timeM,
+        },
+      };
+      await Mydata.Mydata.updateOne(event_id, newevent).then(() => {
+        console.log("event updated");
+        res.redirect("/events");
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // route to delete page

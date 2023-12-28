@@ -34,21 +34,28 @@
 
         <div class="form-group" style="margin-top: 2%;">
           <label for="location">Location</label>
-          <input
-            type="text"
-            name="location"
+          <select
             id="location"
-            value="<%= event.location %>"
-            class="form-control"
-          />
+            name="location"
+            style="padding-left: 235px; padding-right: 235px"
+          >
+          <option value="<%= event.location %>"><%= event.location %></option>
+            <option value="Class A">Class A</option>
+            <option value="Class B">Class B</option>
+            <option value="Class C">Class C</option>
+            <option value="Class D">Class D</option>
+            <option value="Class E">Class E</option>
+            <option value="Class F">Class F</option>
+          </select>
         </div>
+
 
         <div class="form-group" style="margin-top: 2%;">
           <label for="group">Group</label>
           <select
             id="group"
             name="group"
-            style="padding-left: 191px; padding-right: 191px"
+            style="padding-left: 235px; padding-right: 235px"
           >
             <option value="<%= event.group %>"><%= event.group %></option>
             <option value="First">First</option>
@@ -63,7 +70,7 @@
           <select
             id="day"
             name="day"
-            style="padding-left: 176px; padding-right: 176px"
+            style="padding-left: 220px; padding-right: 220px"
           >
             <option value="<%= event.day %>"><%= event.day %></option>
             <option value="Saturday">Saturday</option>

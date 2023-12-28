@@ -3,7 +3,7 @@
   class="table caption-top"
   style="margin-top: 66px; margin-left: 20px; width: 97%"
 >
-  <caption><h3>Fourth Group</h3></caption>
+  <caption><h3>Fourth Grade</h3></caption>
   <thead>
     <tr>
       <th scope="col"> </th>
@@ -11,7 +11,9 @@
       <th scope="col">Instractor</th>
       <th scope="col">Location</th>
       <th scope="col">Time</th>
-      <th scope="col">Action</th>
+      <% if (user) { %>
+        <th scope="col">Action</th>
+      <% } %>
     </tr>
   </thead>
 
@@ -29,19 +31,37 @@
       <td><%= event.instractor %></td>
       <td><%= event.location %></td>
       <td><%= event.timeH %> : <%= event.timeM %></td>
-      <td>
-        <div class="butn">
-          <a href="<%='/events/edit/'+event.id %>" class="btn btn-primary"
-            >Edit</a
-          >
-          <a href="<%='/events/delete/'+event.id %>" class="btn btn-danger"
-            >Delete</a
-          >
-        </div>
-      </td>
+      <% if (user) { %>
+        <td>
+          <div class="butn">
+            <a href="<%='/events/edit/'+event.id %>" class="btn btn-primary"
+              >Edit</a
+            >
+            <a href="<%='/events/delete/'+event.id %>" class="btn btn-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      <% } %>
     </tr>
 
     <%}}}})}%>
   </tbody>
 </table>
+<div class="export">
+  <button class="btn btn-primary"
+  style="
+  padding: 15px;
+  display: block;
+  text-align: center;
+  width: 250px;
+  margin: 25px auto;
+  background-color: #000;
+  color: #fff;
+  font-size: 21px;
+  cursor: pointer;
+  "
+  onclick="tableToexcel()">Table To Excel</button>
+  <!-- <button class="btn btn-primary">pdf</button> -->
+</div>
 <%- include('../partials/footer') -%>

@@ -12,7 +12,7 @@ const crypto = require("crypto");
 const userValidator = require("../validator/user");
 
 const API_KEY =
-  "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";
+  "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";
 const SINGLE_SENDER = '"table" sara.momo7112@gmail.com';
 
 const transporter = nodemailer.createTransport(
