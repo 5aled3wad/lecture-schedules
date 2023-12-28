@@ -133,9 +133,17 @@ router.post("/signup", userValidator.signup, async (req, res) => {
             to: email,
             from: SINGLE_SENDER,
             subject: "Confirm your signup.",
-            html: `<h1>hi from us. </h1>
-          <p> To confirm you email <a href='http://localhost:3000/users/confirm/${token}'> Click here </a> 
-        `,
+            html: `<h2>Dear ${email}</h2>
+
+            <p>Thank you for signing up for our platform! </p>
+            <p>To ensure that you have provided a valid email address</p>
+            <p> please click on the link below to verify your account: <a href='http://localhost:3000/users/confirm/${token}'> Verify </a> </p>
+            <p>If you did not sign up for our platform, please ignore this email.</p>
+            <p>Thank you for your cooperation.</p>
+            <p>Best regards,</p>
+            <p>College Team</p>
+
+            `,
           })
           .then((params) => {
             return res.redirect("/users/login");

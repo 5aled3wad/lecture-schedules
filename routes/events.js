@@ -47,7 +47,7 @@ router.post("/create", isAuth, async (req, res) => {
       group: req.body.group,
       day: req.body.day,
       timeH: req.body.timeH,
-      timeM: req.body.timeM,
+      timeM: 0,
     })
       .save()
       .then(() => {
